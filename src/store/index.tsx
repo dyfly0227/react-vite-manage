@@ -35,3 +35,20 @@ export const UseMenuState = create<MenuState>()(
     }
   )
 );
+
+interface TokenState {
+  token: string;
+  setToken: (val: string) => void;
+}
+export const UseTokenState = create<TokenState>()(
+  persist(
+    (set, get) => ({
+      token: "",
+      setToken: (val) => set({ token: val }),
+    }),
+    {
+      name: "token",
+      storage: createJSONStorage(() => sessionStorage),
+    }
+  )
+);

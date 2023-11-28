@@ -5,13 +5,22 @@ import Login from "./pages/user/login";
 import { menuList } from "./services/system";
 import { MenuListType } from "./services/system.d";
 import Layout from "./components/layout/Index";
-import { UseMenuState, UseThemeState } from "./store";
+import { UseMenuState, UseThemeState, UseTokenState } from "./store";
+import AlertWrap from "./components/feedback/AlertWrap";
 
 function App() {
   const [menu, setMenu] = useState<MenuListType["data"]>([]);
   const theme = UseThemeState((state) => state.theme);
   const setMenuList = UseMenuState((state) => state.setMenuList);
+  const token = UseTokenState((state) => state.token);
+  const checkLogin = () => {
+    if (!token && location.pathname !== "/user/login") {
+      //  此时路由还未渲染，不能使用react router的useNavigate来跳转
+      location.href = "/user/login";
+    }
+  };
   useEffect(() => {
+    checkLogin();
     menuList().then((res) => {
       setMenu(res.data);
       setMenuList(res.data);
@@ -19,6 +28,7 @@ function App() {
   }, []);
   return (
     <div data-theme={theme} className="w-full">
+      <AlertWrap />
       <BrowserRouter>
         <Routes>
           <Route path="/" Component={Home} />
