@@ -1,14 +1,12 @@
+export type MenuListItem = {
+  title: string;
+  path: string;
+  component: string;
+  children: MenuListItem[];
+};
 export type MenuListType = {
   code: number;
   msg: string;
-  data: Array<{
-    title: string;
-    path: string;
-    component: string;
-    children: Array<{
-      title: string;
-      path: string;
-      component: string;
-    }>;
-  }>;
+  total: number;
+  data: MenuListItem[];
 };

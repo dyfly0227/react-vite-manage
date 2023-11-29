@@ -16,7 +16,7 @@ const Index: FC<IndexProps> = () => {
       <div className="pt-2 h-full">
         <Menu />
       </div>
-      <div>
+      <div className="m-4 shadow-md p-4 flex-1">
         <Outlet />
       </div>
     </div>

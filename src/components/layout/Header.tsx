@@ -7,7 +7,7 @@ interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   return (
-    <div className="w-full fixed left-0 top-0">
+    <div className="w-full fixed left-0 top-0 z-10">
       <div className="navbar bg-base-100 shadow-sm">
         <Logo />
         <button className="btn btn-square btn-ghost">
