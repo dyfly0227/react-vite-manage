@@ -11,6 +11,20 @@ const menu: FC = () => {
       dataIndex: "title",
     },
     {
+      title: "类型",
+      dataIndex: "level",
+      render: (item) => {
+        switch (item.level) {
+          case 1:
+            return <div className="badge badge-primary">一级菜单</div>;
+          case 2:
+            return <div className="badge badge-secondary">二级菜单</div>;
+          default:
+            return <div className="badge badge-accent">按钮</div>;
+        }
+      },
+    },
+    {
       title: "路径",
       dataIndex: "path",
     },
@@ -18,10 +32,27 @@ const menu: FC = () => {
       title: "组件",
       dataIndex: "component",
     },
+    {
+      title: "操作",
+      dataIndex: "option",
+      options: ["edit", "delete"],
+    },
   ];
+  const event = (type: string, item: MenuListItem) => {
+    console.log(type, item);
+  };
+  const toolHandle = (type: string) => {
+    console.log(type);
+  };
   return (
     <div>
-      <TablePro request={menuList} cols={cols} />
+      <TablePro
+        request={menuList}
+        cols={cols}
+        event={event}
+        tool={["add","export"]}
+        toolHandle={toolHandle}
+      />
     </div>
   );
 };

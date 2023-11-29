@@ -1,4 +1,6 @@
 export type MenuListItem = {
+  id: number;
+  level: number;
   title: string;
   path: string;
   component: string;

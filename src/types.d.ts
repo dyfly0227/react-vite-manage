@@ -6,8 +6,16 @@ export interface AlertProps {
   msg: string;
 }
 
+export type TableRequsetParams = {
+  pageSize: number;
+  pageNum: number;
+} & {
+  [k:string]: unknown
+}
+
 export type TableCols<T> = {
   title: string;
   dataIndex: string;
   render?: ((item: T) => ReactNode);
+  options?: string[]
 }[];
