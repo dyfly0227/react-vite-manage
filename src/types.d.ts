@@ -10,12 +10,21 @@ export type TableRequsetParams = {
   pageSize: number;
   pageNum: number;
 } & {
-  [k:string]: unknown
-}
+  [k: string]: unknown;
+};
 
-export type TableCols<T> = {
+export type TableColType<T> = {
   title: string;
   dataIndex: string;
-  render?: ((item: T) => ReactNode);
-  options?: string[]
-}[];
+  render?: (item: T) => ReactNode; // 自定义表格中的渲染
+  options?: string[];
+  showInModal?: boolean;
+  renderForm?: (item: T) => ReactNode; // 自定义form表单中的渲染
+  valueEnum?: {
+    label: string;
+    value: string | number;
+  }[];
+  editType?: "select" | "radio";
+};
+
+export type TableCols<T> = TableColType<T>[];

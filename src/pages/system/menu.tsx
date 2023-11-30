@@ -1,18 +1,23 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import TablePro from "../../components/tablePro/Index";
+import TableModal from "../../components/tablePro/Modal";
 import { menuList } from "../../services/system";
 import { TableCols } from "../../types";
 import { MenuListItem } from "../../services/system.d";
 
-const menu: FC = () => {
+const Menu: FC = () => {
+  const [current, setCurrent] = useState<MenuListItem>({} as MenuListItem);
+  const [visible, setVisible] = useState(false);
   const cols: TableCols<MenuListItem> = [
     {
       title: "名称",
       dataIndex: "title",
+      showInModal: true,
     },
     {
       title: "类型",
       dataIndex: "level",
+      showInModal: true,
       render: (item) => {
         switch (item.level) {
           case 1:
@@ -23,14 +28,31 @@ const menu: FC = () => {
             return <div className="badge badge-accent">按钮</div>;
         }
       },
+      valueEnum: [
+        {
+          label: "一级菜单",
+          value: 1,
+        },
+        {
+          label: "二级菜单",
+          value: 2,
+        },
+        {
+          label: "按钮",
+          value: 3,
+        },
+      ],
+      editType: "select",
     },
     {
       title: "路径",
       dataIndex: "path",
+      showInModal: true,
     },
     {
       title: "组件",
       dataIndex: "component",
+      showInModal: true,
     },
     {
       title: "操作",
@@ -39,10 +61,16 @@ const menu: FC = () => {
     },
   ];
   const event = (type: string, item: MenuListItem) => {
-    console.log(type, item);
+    setCurrent(item);
+    if (type === "edit") {
+      setVisible(true);
+    }
   };
   const toolHandle = (type: string) => {
-    console.log(type);
+    if (type === "add") {
+      setCurrent({} as MenuListItem);
+      setVisible(true);
+    }
   };
   return (
     <div>
@@ -50,11 +78,22 @@ const menu: FC = () => {
         request={menuList}
         cols={cols}
         event={event}
-        tool={["add","export"]}
+        tool={["add", "export"]}
         toolHandle={toolHandle}
+      />
+      <TableModal
+        title="编辑"
+        cols={cols}
+        data={current}
+        visible={visible}
+        setVisible={setVisible}
+        onFinish={(data)=>{
+          console.log(data);
+          setVisible(false);
+        }}
       />
     </div>
   );
 };
 
-export default menu;
+export default Menu;
