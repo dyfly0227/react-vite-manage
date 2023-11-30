@@ -25,10 +25,11 @@ function Index<T>({
   pageSize = 10,
   event,
   tool,
-  toolHandle
+  toolHandle,
 }: IndexProps<T>) {
   const [pageNum, setPageNum] = useState(1);
   const [data, setData] = useState<T[]>([]);
+  const [total, setTotal] = useState(0);
   useEffect(() => {
     request({
       pageNum,
@@ -37,16 +38,15 @@ function Index<T>({
     }).then((res) => {
       if (res.code === 200) {
         setData(res.data);
+        setTotal(Math.ceil(res.total / pageSize));
       }
     });
   }, [pageNum]);
   return (
     <div>
-      {
-        tool && toolHandle && <Tool tool={tool} toolHandle={toolHandle}/>
-      }
+      {tool && toolHandle && <Tool tool={tool} toolHandle={toolHandle} />}
       <Table<T> cols={cols} data={data} event={event} />
-      <Pagination />
+      <Pagination total={total} pageNum={pageNum} setPageNum={setPageNum} />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import { TableCols } from "../../types";
 import Option from "./Option";
+import SVG from "../../components/svg/Index";
+import { useState } from "react";
 
 export type ChildrenInItem<T> = {
   children?: T[];
@@ -11,9 +13,12 @@ interface TreeProps<T> {
   data: ChildrenInItem<T>;
   deep: number;
   event: (type: string, item: T) => void;
+  visible?: boolean;
 }
 
-function Tree<T>({ cols, data, deep, event }: TreeProps<T>) {
+function Tree<T>({ cols, data, deep, event, visible }: TreeProps<T>) {
+  const [showChild, setShowChild] = useState(false);
+  const visibleClass = deep === 1 ? "" : visible ? "" : "hidden";
   return (
     <>
       {cols.map((col, index) => {
@@ -21,7 +26,9 @@ function Tree<T>({ cols, data, deep, event }: TreeProps<T>) {
           return (
             <div
               key={"father" + index}
-              className={"font-sans text-sm pr-2 pt-4 pb-4 border-t "}
+              className={
+                "font-sans text-sm pr-2 pt-4 pb-4 border-t " + visibleClass
+              }
               style={{
                 paddingLeft: deep + "rem",
               }}
@@ -33,11 +40,24 @@ function Tree<T>({ cols, data, deep, event }: TreeProps<T>) {
           return (
             <div
               key={"father" + index}
-              className={"font-sans text-sm pr-2 pt-4 pb-4 border-t "}
+              className={
+                "font-sans text-sm pr-2 pt-4 pb-4 border-t flex items-center overflow-hidden " +
+                visibleClass
+              }
               style={{
                 paddingLeft: deep + "rem",
               }}
             >
+              {deep === 1 && index === 0 && (
+                <div
+                  className="cursor-pointer mr-2"
+                  onClick={() => {
+                    setShowChild(!showChild);
+                  }}
+                >
+                  <SVG name="add" />
+                </div>
+              )}
               {col.render ? (
                 col.render(data as T)
               ) : (
@@ -57,6 +77,7 @@ function Tree<T>({ cols, data, deep, event }: TreeProps<T>) {
               data={child as ChildrenInItem<T>}
               deep={deep + 1}
               event={event}
+              visible={deep === 1 ? showChild : visible}
             />
           );
         })}
