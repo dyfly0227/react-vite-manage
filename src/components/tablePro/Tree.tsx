@@ -11,13 +11,14 @@ export type ChildrenInItem<T> = {
 interface TreeProps<T> {
   cols: TableCols<T>;
   data: ChildrenInItem<T>;
-  deep: number;
+  deep: number; // deep = 1时为一级节点
   event: (type: string, item: T) => void;
   visible?: boolean;
 }
 
 function Tree<T>({ cols, data, deep, event, visible }: TreeProps<T>) {
   const [showChild, setShowChild] = useState(false);
+  // 用于控制子节点的隐藏和显示
   const visibleClass = deep === 1 ? "" : visible ? "" : "hidden";
   return (
     <>

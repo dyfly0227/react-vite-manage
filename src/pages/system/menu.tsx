@@ -8,6 +8,7 @@ import { MenuListItem } from "../../services/system.d";
 const Menu: FC = () => {
   const [current, setCurrent] = useState<MenuListItem>({} as MenuListItem);
   const [visible, setVisible] = useState(false);
+  const [formkey, setFormKey] = useState(0);
   const cols: TableCols<MenuListItem> = [
     {
       title: "名称",
@@ -47,16 +48,19 @@ const Menu: FC = () => {
     {
       title: "路径",
       dataIndex: "path",
+      hideInSearch: true,
       showInModal: true,
     },
     {
       title: "组件",
       dataIndex: "component",
+      hideInSearch: true,
       showInModal: true,
     },
     {
       title: "操作",
       dataIndex: "option",
+      hideInSearch: true,
       options: ["edit", "delete"],
     },
   ];
@@ -80,6 +84,7 @@ const Menu: FC = () => {
         event={event}
         tool={["add", "export"]}
         toolHandle={toolHandle}
+        formKey={formkey}
       />
       <TableModal
         title="编辑"
@@ -87,8 +92,10 @@ const Menu: FC = () => {
         data={current}
         visible={visible}
         setVisible={setVisible}
-        onFinish={(data)=>{
+        onFinish={(data) => {
           console.log(data);
+          // 提交数据并刷新表格
+          setFormKey(formkey + 1);
           setVisible(false);
         }}
       />

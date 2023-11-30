@@ -15,15 +15,15 @@ function Option<T>({ options, event, data }: OptionProps<T>) {
   return (
     <div className="flex">
       {options.map((option) => (
-        <a
+        <button
           key={option}
-          className="text-primary underline mr-2 cursor-pointer"
+          className="btn btn-link"
           onClick={() => {
             event(option, data);
           }}
         >
           {btns[option]}
-        </a>
+        </button>
       ))}
     </div>
   );

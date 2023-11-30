@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { TableCols, TableColType } from "../../types";
+import { TableCols } from "../../types";
+import FormItem from "./FormItem";
 
 interface ModalProps<T> {
   title: string;
@@ -8,70 +9,6 @@ interface ModalProps<T> {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
   onFinish: (form: T) => void;
-}
-
-interface FormItemProps<T> {
-  col: TableColType<T>;
-  data: T;
-  formData: T;
-  setFormData: React.Dispatch<React.SetStateAction<T>>;
-}
-
-function FormItem<T>({ col, data, formData, setFormData }: FormItemProps<T>) {
-  const changeEvent = (value: string | number, key: string) => {
-    const temp = { ...formData };
-    Reflect.set(temp as object, key, value);
-    setFormData(temp as T);
-  };
-  if (!col.showInModal) return <></>;
-  if (col.renderForm) {
-    return col.renderForm(data);
-  } else if (col.editType && col.editType === "select") {
-    return (
-      <div className="flex items-center">
-        <label htmlFor={col.dataIndex} className="w-40 text mr-4">
-          {col.title}
-        </label>
-        <select
-          id={col.dataIndex}
-          className="select select-bordered w-full max-w-xs"
-          name={col.dataIndex}
-          value={formData[col.dataIndex] || ""}
-          onChange={(e) => {
-            changeEvent(e.target.value, col.dataIndex);
-          }}
-        >
-          {col.valueEnum &&
-            col.valueEnum.map((p) => (
-              <option key={p.label} value={p.value}>
-                {p.label}
-              </option>
-            ))}
-        </select>
-      </div>
-    );
-  } else if (col.editType && col.editType === "radio") {
-    return <></>;
-  } else {
-    return (
-      <div className="flex items-center pt-2 pb-2">
-        <label htmlFor={col.dataIndex} className="w-40 text mr-4">
-          {col.title}
-        </label>
-        <input
-          value={formData[col.dataIndex] || ""}
-          onChange={(e) => {
-            changeEvent(e.target.value, col.dataIndex);
-          }}
-          id={col.dataIndex}
-          type="text"
-          name={col.dataIndex}
-          placeholder={"请输入" + col.title}
-          className="input input-bordered w-full max-w-xs"
-        />
-      </div>
-    );
-  }
 }
 
 function Modal<T>({
@@ -104,15 +41,18 @@ function Modal<T>({
       <div className="modal-box">
         <h3 className="font-bold text-lg">{title}</h3>
         <div className="w-full p-4">
-          {cols.map((col) => (
-            <FormItem<T>
-              col={col}
-              data={data}
-              key={col.dataIndex}
-              formData={formData}
-              setFormData={setFormData}
-            />
-          ))}
+          {cols.map((col) => {
+            return col.showInModal ? (
+              <FormItem<T>
+                col={col}
+                data={data}
+                key={col.dataIndex}
+                formData={formData}
+                setFormData={setFormData}
+                formId="modal"
+              />
+            ) : null;
+          })}
         </div>
         <div className="modal-action">
           <form method="dialog">
