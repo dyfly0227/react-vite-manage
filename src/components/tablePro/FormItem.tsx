@@ -26,7 +26,7 @@ function FormItem<T>({
   } else if (col.editType && col.editType === "select") {
     // 下拉框
     return (
-      <div className="flex items-center">
+      <div className="flex items-center pt-2 pb-2">
         <label
           htmlFor={col.dataIndex + formId}
           className="text mr-4 whitespace-nowrap"
@@ -57,6 +57,46 @@ function FormItem<T>({
   } else if (col.editType && col.editType === "radio") {
     // 懒得没写
     return <></>;
+  } else if (col.editType && col.editType === "upload") {
+    return (
+      <div className="flex items-center pt-2 pb-2">
+        <label
+          htmlFor={col.dataIndex + formId}
+          className="text mr-4 whitespace-nowrap"
+        >
+          {col.title}：
+        </label>
+        {formData[col.dataIndex] ? (
+          <div className="flex flex-col">
+            <div className="avatar">
+              <div className="w-24 rounded">
+                <img src={formData[col.dataIndex]} />
+              </div>
+            </div>
+            <button
+              className="btn btn-link btn-warning"
+              onClick={() => {
+                changeEvent("", col.dataIndex);
+              }}
+            >
+              重新上传
+            </button>
+          </div>
+        ) : (
+          <input
+            id={col.dataIndex + formId}
+            type="file"
+            accept={col.accept || "*"}
+            className="file-input file-input-bordered w-full max-w-xs"
+            onChange={(e) => {
+              if (col.uploadHandle) {
+                col.uploadHandle(e);
+              }
+            }}
+          />
+        )}
+      </div>
+    );
   } else {
     return (
       <div className="flex items-center pt-2 pb-2">

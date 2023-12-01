@@ -1,4 +1,4 @@
-import { MenuListItem, RoleListItem } from "./system.d";
+import { MenuListItem, RoleListItem, UserListItem } from "./system.d";
 import request from "../utils/request";
 import { ResponseListBasicType, TableRequsetParams } from "../types";
 export const menuList = async (
@@ -16,6 +16,16 @@ export const roleList = async (
 ): Promise<ResponseListBasicType<RoleListItem>> => {
   return request({
     url: "/role/list",
+    method: "get",
+    params,
+  });
+};
+
+export const userList = async (
+  params: TableRequsetParams
+): Promise<ResponseListBasicType<UserListItem>> => {
+  return request({
+    url: "/user/list",
     method: "get",
     params,
   });

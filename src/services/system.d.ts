@@ -12,3 +12,12 @@ export type RoleListItem = {
   name: string;
   permission: string; // menuId 以逗号隔开
 };
+
+export type UserListItem = {
+  id: number;
+  nickname: string;
+  account: string;
+  role: number;
+  password: string;
+  avator: string;
+};

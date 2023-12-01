@@ -25,7 +25,9 @@ export type TableColType<T> = {
     label: string;
     value: string | number;
   }[];
-  editType?: "select" | "radio"; // 其他类型可以拓展，比如range,date,switch等等
+  editType?: "select" | "radio" | "upload"; // 其他类型可以拓展，比如range,date,switch等等
+  accept?: string; // 当editType为upload时，须传
+  uploadHandle?: (e:React.ChangeEvent<HTMLInputElement>) => void // 当editType为upload时，上传完回调
 };
 
 export type TableCols<T> = TableColType<T>[];

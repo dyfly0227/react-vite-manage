@@ -16,6 +16,11 @@ const Menu: FC = () => {
       showInModal: true,
     },
     {
+      title: "Id",
+      dataIndex: "id",
+      hideInSearch: true,
+    },
+    {
       title: "类型",
       dataIndex: "level",
       showInModal: true,
