@@ -56,7 +56,9 @@ function Tree<T>({ cols, data, deep, event, visible }: TreeProps<T>) {
                     setShowChild(!showChild);
                   }}
                 >
-                  <SVG name="add" />
+                  {data.children && data.children.length > 0 && (
+                    <SVG name="add" />
+                  )}
                 </div>
               )}
               {col.render ? (

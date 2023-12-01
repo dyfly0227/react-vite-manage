@@ -3,13 +3,13 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import Home from "./pages/home/index";
 import Login from "./pages/user/login";
 import { menuList } from "./services/system";
-import { MenuListType } from "./services/system.d";
+import { MenuListItem } from "./services/system.d";
 import Layout from "./components/layout/Index";
 import { UseMenuState, UseThemeState, UseTokenState } from "./store";
 import AlertWrap from "./components/feedback/AlertWrap";
 
 function App() {
-  const [menu, setMenu] = useState<MenuListType["data"]>([]);
+  const [menu, setMenu] = useState<MenuListItem[]>([]);
   const theme = UseThemeState((state) => state.theme);
   const setMenuList = UseMenuState((state) => state.setMenuList);
   const token = UseTokenState((state) => state.token);
@@ -21,7 +21,10 @@ function App() {
   };
   useEffect(() => {
     checkLogin();
-    menuList().then((res) => {
+    menuList({
+      pageNum: 1,
+      pageSize: 100,
+    }).then((res) => {
       setMenu(res.data);
       setMenuList(res.data);
     });

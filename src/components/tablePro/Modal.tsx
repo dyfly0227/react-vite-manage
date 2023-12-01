@@ -23,10 +23,12 @@ function Modal<T>({
   useEffect(() => {
     setFormData(data);
     if (visible) {
-      (document.getElementById("my_modal_5")! as any).showModal();
+      (document.getElementById("table_pro_modal")! as any).showModal();
     } else {
       // 用取消按钮来关闭弹窗
-      (document.querySelector("#cancelBtn") as HTMLButtonElement).click();
+      (
+        document.querySelector("#table_pro_cancel_btn") as HTMLButtonElement
+      ).click();
     }
   }, [visible]);
   const cancelHandle = () => {
@@ -37,7 +39,7 @@ function Modal<T>({
     onFinish(formData);
   };
   return (
-    <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+    <dialog id="table_pro_modal" className="modal modal-bottom sm:modal-middle">
       <div className="modal-box">
         <h3 className="font-bold text-lg">{title}</h3>
         <div className="w-full p-4">
@@ -55,8 +57,12 @@ function Modal<T>({
           })}
         </div>
         <div className="modal-action">
-          <form method="dialog">
-            <button className="btn" onClick={cancelHandle} id="cancelBtn">
+          <form method="dialog" id="table_pro_form">
+            <button
+              className="btn"
+              onClick={cancelHandle}
+              id="table_pro_cancel_btn"
+            >
               取消
             </button>
           </form>

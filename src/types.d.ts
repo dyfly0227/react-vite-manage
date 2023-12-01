@@ -29,3 +29,10 @@ export type TableColType<T> = {
 };
 
 export type TableCols<T> = TableColType<T>[];
+
+export type ResponseListBasicType<T> = {
+  code: number;
+  msg: string;
+  total: number;
+  data: T[];
+} 

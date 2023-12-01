@@ -6,9 +6,9 @@ export type MenuListItem = {
   component: string;
   children: MenuListItem[];
 };
-export type MenuListType = {
-  code: number;
-  msg: string;
-  total: number;
-  data: MenuListItem[];
+
+export type RoleListItem = {
+  id: number;
+  name: string;
+  permission: string; // menuId 以逗号隔开
 };
