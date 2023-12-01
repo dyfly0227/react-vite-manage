@@ -38,3 +38,10 @@ export type ResponseListBasicType<T> = {
   total: number;
   data: T[];
 } 
+
+export type UserInfoItemType = {
+  nickname: string;
+  account: string;
+  avator: string;
+  permission: string;
+}

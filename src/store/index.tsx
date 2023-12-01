@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { Theme } from "daisyui";
 import { MenuListItem } from "../services/system.d";
+import { UserInfoItemType } from "../types";
 interface ThemeState {
   theme: Theme;
   setTheme: (val: Theme) => void;
@@ -39,12 +40,16 @@ export const UseMenuState = create<MenuState>()(
 interface TokenState {
   token: string;
   setToken: (val: string) => void;
+  userInfo: UserInfoItemType | null;
+  setUserInfo: (val: UserInfoItemType | null) => void;
 }
 export const UseTokenState = create<TokenState>()(
   persist(
     (set, get) => ({
       token: "",
-      setToken: (val) => set({ token: val }),
+      setToken: (val) => set({ ...get(), token: val }),
+      userInfo: null,
+      setUserInfo: (val) => set({ ...get(), userInfo: val }),
     }),
     {
       name: "token",

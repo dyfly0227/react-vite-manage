@@ -34,7 +34,9 @@ function App() {
       <AlertWrap />
       <BrowserRouter>
         <Routes>
-          <Route path="/" Component={Home} />
+          <Route Component={Layout}>
+            <Route path="/" Component={Home} />
+          </Route>
           <Route path="/user/login" Component={Login} />
         </Routes>
         {menu.length > 0 && (

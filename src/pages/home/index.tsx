@@ -1,11 +1,6 @@
-import React, { FC } from "react";
-import Layout from "../../components/layout/Index";
+import { FC } from "react";
 const index: FC = () => {
-  return (
-    <div>
-      <Layout />
-    </div>
-  );
+  return <h3>首页该写点什么？</h3>;
 };
 
 export default index;

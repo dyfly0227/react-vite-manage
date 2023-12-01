@@ -12,7 +12,8 @@ const serviceAxios = axios.create({
 serviceAxios.interceptors.request.use(
   (config) => {
     // 如果开启 token 认证
-    config.headers["Authorization"] = sessionStorage.getItem("token"); // 请求头携带 token
+    const tokenStorage = JSON.parse(sessionStorage.getItem("token")!);
+    config.headers["Authorization"] = tokenStorage!["state"]["token"]; // 请求头携带 token
     // 设置请求头
     if (!config.headers["content-type"]) {
       // 如果没有设置请求头
